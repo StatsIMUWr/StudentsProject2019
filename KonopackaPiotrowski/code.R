@@ -33,7 +33,7 @@ plot1 <- function(low, high){
 }
 
 plot1(11, 18)
-
+# Tutaj jest nowa zmiana
 #add filter for sport 
 # filter_sports <- function(dtf, sport){
 #   return dtf[dtf$Sport == sport, ]
