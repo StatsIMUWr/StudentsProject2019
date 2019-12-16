@@ -29,7 +29,7 @@ plot1 <- function(low, high){
   ggplot(no_NA_body[range, ], aes(x = Weight, y = Height, color = Sex)) + 
     geom_point(size = 0.2, alpha = 0.9) + 
     scale_color_manual("Sex", values = c(F = "sienna3", M = "navy")) +
-    labs(title = "Weight and height of athletes", subtitle = age_str, x = "weight [cm]", y = "height [cm]")
+    labs(title = "Weight and height of athletes", subtitle = age_str, x = "weight [kg]", y = "height [cm]")
 }
 
 plot1(11, 18)
