@@ -3,10 +3,10 @@ library("shiny")
 source("functions.R")
 
 #ui
-ui <- fluidPage("test",
+ui <- fluidPage("Test",
                 sliderInput(inputId = "range",
                             label ="Age range:",
-                            min = 11, max = 100,
+                            min = min(data$Age, na.rm=T), max = max(data$Age, na.rm=T),
                             value = c(14,18)),
                 plotOutput("plot1"))
 
