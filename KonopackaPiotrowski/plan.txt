@@ -1,7 +1,0 @@
-Data preprocessing
-1.Remove duplicated rows OK
-2.Find all missing values:
-  -create df of is.na values OK
-  -sum each column of is.na dataframe OK
-  -plot how many NA's has each column
-  -create new df without NA's
