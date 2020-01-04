@@ -2,9 +2,6 @@
 library("shiny")
 source("functions.R")
 
-#load data without duplicated rows TODO fix data
-data <- load_as_dataframe("data/athlete_events.csv")
-
 #ui
 ui <- fluidPage("test",
                 sliderInput(inputId = "range",

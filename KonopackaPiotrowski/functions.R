@@ -1,3 +1,11 @@
+#installs all listed libraries (and required packages) at once
+load_libraries <- function(libs){
+  install.packages("easypackages")
+  library("easypackages")
+  packages(libs)
+  libraries(libs)
+}
+
 #load libraries that may be useful
 libs <- list("conflicted", "dplyr", "lubridate", "tidyr", "stringr", "data.table", "ggplot2")
 load_libraries(libs)
@@ -19,13 +27,8 @@ load_as_dataframe <- function(path){
   return (data)
 }
 
-#installs all listed libraries (and required packages) at once
-load_libraries <- function(libs){
-  install.packages("easypackages")
-  library("easypackages")
-  packages(libs)
-  libraries(libs)
-}
+#load data without duplicated rows 
+data <- load_as_dataframe("data/athlete_events.csv")
 
 #find all NAs
 is_NA_dtf <- as_tibble(is.na.data.frame(data))
