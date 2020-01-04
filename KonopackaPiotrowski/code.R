@@ -3,6 +3,12 @@
 #load source file where functions are defined
 source("functions.R")
 
+#other functions, defined here (TODO)
+# filter_sports <- function(dtf, sport){
+  #   return dtf[dtf$Sport == sport, ]
+  # }
+
+
 #load libraries that may be useful
 libs <- list("conflicted", "dplyr", "lubridate", "tidyr", "stringr", "data.table", "ggplot2")
 load_libraries(libs)
@@ -11,7 +17,7 @@ load_libraries(libs)
 data <- load_as_dataframe("data/athlete_events.csv")
 
 #find all NAs
-is_NA_dtf <- as_tibble(is.na.data.frame(data))
+is_NA_dtf <- as_tibble(is.na.data.frame(d2ata))
 is_NA_sum <- colSums(NA_dtf)
 
 #boolean vectors showing where variables aren't NAs
@@ -32,12 +38,7 @@ plot1 <- function(low, high){
     labs(title = "Weight and height of athletes", subtitle = age_str, x = "weight [kg]", y = "height [cm]")
 }
 
-plot1(11, 18)
-# Tutaj jest nowa zmiana
-#add filter for sport 
-# filter_sports <- function(dtf, sport){
-#   return dtf[dtf$Sport == sport, ]
-# }
+plot1(11, 14)
 
 #end of script
 cat("OK")
