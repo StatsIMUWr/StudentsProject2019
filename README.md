@@ -14,3 +14,5 @@ Projects:
 - [OlympicsVis](https://github.com/StatsIMUWr/StudentsProject2019/tree/master/KonopackaPiotrowski) - Shiny application and R functions to explore data about Olympic Games.
 
 - [Credit Risk Vis](https://github.com/StatsIMUWr/StudentsProject2019/tree/master/HasalJasicToczek) - Shiny applications and R functions to explore credit risk data.
+
+DUE DATA: 05.02.2020.
