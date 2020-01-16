@@ -1,13 +1,14 @@
+
 library(ggplot2)
 # Wczytanie danych
 data <- read.table("german.data")
 colnames(data) <- c("Account_status",
-                    "Duration_in_month",
+                    "Duration(month)",
                     "Credit_history",
                     "Puprose",
                     "Credit_amount",
                     "Savings_account/bonds",
-                    "Present_employment since",
+                    "Present_employment_since",
                     "Rate",
                     "Status/Sex",
                     "Debtors/guarantors",
@@ -16,7 +17,7 @@ colnames(data) <- c("Account_status",
                     "Age",
                     "Other_installment_plans",
                     "Housing",
-                    "Existing_credit_at_this_bank",
+                    "Existing_credit",
                     "Job",
                     "Maintenance",
                     "Telephone",
@@ -40,10 +41,10 @@ for(k in data$Age){
 data$Age <- new_age
 
 # Zmiana decyzji 
-jedyneczki <- which(data$Decision == 1)
-dwojeczki <- which(data$Decision == 2)
-data$Decision[jedyneczki] = "Granted"
-data$Decision[dwojeczki] = "Not granted"
+positive <- which(data$Decision == 1)
+negative <- which(data$Decision == 2)
+data$Decision[positive] = "Granted"
+data$Decision[negative] = "Not granted"
 
 # Zmiana kwoty na przedziały kwoty
 new_amount <- c(1:1000)
@@ -64,18 +65,26 @@ for(k in data$Credit_amount){
 }
 data$Credit_amount <- new_amount
 
-draw_plot <- function(col){
-  ggplot(data, aes(col, fill = Decision)) + 
-    geom_bar(position = "dodge") + 
-    labs(title = "Decyzja przyznania kredytu w zależności od col", x = "col")
+changing_factor_names <- function(col, new_names){
+  levels(data$col) <- new_names
 }
 
-draw_plot2 <- function(col1, col2){
-  ggplot(data, aes(col1, fill=col2, color = Decision)) + 
+#sapply(colnames(data), changing_factor_names, c(c('<0DM', '[0,200]DM'))
+
+plot_one_attribute <- function(col){
+  ggplot(data, aes_string( x = col, fill = 'Decision')) + 
     geom_bar(position = "dodge") + 
-    labs(title = "Decyzja przyznania kredytu w zależności od col1 i col2", x = "col1")
-    #grubość ramek i inne kolory ramek niż kolumn
+    labs(title = paste("Decision about credit depending on", col))
 }
 
-draw_plot(data$Credit_amount)
-draw_plot2(data$Job, data$Account_status)
+plot_two_attributes <- function(col1, col2){
+  ggplot(data, aes_string( x = col1, fill = col2, color = 'Decision')) + 
+    geom_bar(position = "dodge") + 
+    #facet_wrap(~)
+    labs(title = paste("Decision about credit depending on", col1, 'and', col2))
+  #grubość ramek i inne kolory ramek niż kolumn
+}
+
+plot_one_attribute('Account_status')
+plot_two_attributes('Job', 'Account_status')
+
