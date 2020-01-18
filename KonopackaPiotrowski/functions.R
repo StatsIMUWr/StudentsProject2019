@@ -52,7 +52,17 @@ plot1 <- function(low, high){
     labs(title = "Weight and height of athletes", subtitle = age_str, x = "weight [kg]", y = "height [cm]")
 }
 
+#histogram: how many observations in column x colored by...
+#TODO change position, color etc.
+plot2 <- function(variable, color_by){
+  ggplot(data, aes_string(x = variable, fill = color_by)) + 
+    geom_bar() +
+    scale_fill_manual("Sex", values = c(F = "sienna3", M = "navy")) +
+    labs(title = paste("Number of observations in our database"))
+}
 
-
-
+#PYTANIA
+#1.jak zapisac sobie w wektorze skale kolorow zeby moc pozniej uzywac
+#2.o co chodzi z tym aes i czemu aes_string dziala a to nie?
+#3.czy da sie zrobic tak ze jak najade na slupek to wyswietli mi konkretna wartosc
 

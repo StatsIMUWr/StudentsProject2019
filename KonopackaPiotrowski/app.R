@@ -2,20 +2,14 @@
 library("shiny")
 source("functions.R")
 
-
 ui <- navbarPage("Navbar!",
-                tabPanel("Plot",
+                tabPanel("Plot 1",
                         sliderInput(inputId = "range",
                                 label ="Age range:",
                                 min = min(data$Age, na.rm=T), max = max(data$Age, na.rm=T),
                                 value = c(14,18)),
                         plotOutput("plot1"))
-                
                 )
-
-
-                            
-                 
 
 #server
 server <- function(input, output){
