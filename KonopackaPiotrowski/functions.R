@@ -49,7 +49,7 @@ plot1 <- function(low, high){
   ggplot(no_NA_body[range, ], aes(x = Weight, y = Height, color = Sex)) + 
     geom_point(size = 0.2, alpha = 0.9) + 
     scale_color_manual("Sex", values = c(F = "sienna3", M = "navy")) +
-    labs(title = "Weight and height of athletes", subtitle = age_str, x = "weight [kg]", y = "height [cm]")
+    labs(title = "Weight and height of athletes", subtitle = age_str, x = "Weight [kg]", y = "Height [cm]")
 }
 
 #histogram: how many observations in column x colored by...
@@ -58,11 +58,15 @@ plot2 <- function(variable, color_by){
   ggplot(data, aes_string(x = variable, fill = color_by)) + 
     geom_bar() +
     scale_fill_manual("Sex", values = c(F = "sienna3", M = "navy")) +
-    labs(title = paste("Number of observations in our database"))
+    labs(title = "Number of observations in our database", 
+         subtitle = paste("Chosen variable: ", variable), 
+         x = "Value", y = "Number of observations")
 }
 
 #PYTANIA
 #1.jak zapisac sobie w wektorze skale kolorow zeby moc pozniej uzywac
 #2.o co chodzi z tym aes i czemu aes_string dziala a to nie?
 #3.czy da sie zrobic tak ze jak najade na slupek to wyswietli mi konkretna wartosc
+#4.https://shiny.rstudio.com/gallery/navbar-example.html?fbclid=IwAR0hGM1ay5ODMSqTJs4jgrAZNNf8cScKwcOiy4c1DF1n6KdhQEaxw5S2qjI
+#5.TODO naprawic plot2
 
