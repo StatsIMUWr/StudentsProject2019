@@ -24,10 +24,15 @@ colnames(credit_data) <- c("Account_status",
                            "Decision")
 
 # Zmiana wieku na przedziały wieku.
-partition_age <- function(range_age){
-  cut(credit_data$Age, breaks = seq(18,80,range_age))
+#partition_age <- function(range_age){
+  #cut(credit_data$Age, breaks = seq(18,80,range_age))
+#}
+#credit_data$Age <- partition_age(10)
+
+age_range <- function(st_age, nd_age, by){
+  cut(credit_data$Age, breaks = seq(st_age, nd_age, by))
 }
-credit_data$Age <- partition_age(5)
+#credit_data$Age <- age_range(25, 35, 2)
 
 # Zmiana decyzji 
 positive <- which(credit_data$Decision == 1)

@@ -6,7 +6,7 @@ ui <- fluidPage(
          selectInput(inputId = "parametr2", 
                      label = "Choose second parametr to analize",
                      choices = colnames(credit_data)),
-           sliderInput(inputId = "range",
+           sliderInput(inputId = "age_range",
                        label = "Choose age:",
              min = 18,
              max = 80,
