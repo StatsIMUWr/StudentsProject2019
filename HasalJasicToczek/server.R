@@ -1,12 +1,11 @@
-
 server <- function(input, output) {
-  
+   
   output$one_variable <- renderPlot({
-    #age_range(20, 40, 2)
-    plot_one_attribute(input$parametr)
-    
+    credit_data_age <- age_range(input$age_range[1],input$age_range[2], input$step)
+    plot_one_attribute(credit_data_age, input$parametr)
   })
   output$two_variables <- renderPlot({
-    plot_two_attributes(input$parametr, input$parametr2)
+    credit_data_age <- age_range(input$age_range[1],input$age_range[2], input$step)
+    plot_two_attributes(credit_data_age, input$parametr, input$parametr2)
   })
 }
