@@ -25,14 +25,13 @@ colnames(credit_data) <- c("Account_status",
 
 # Zmiana wieku na przedziały wieku.
 #partition_age <- function(range_age){
-  #cut(credit_data$Age, breaks = seq(18,80,range_age))
+#cut(credit_data$Age, breaks = seq(18,80,range_age))
 #}
 #credit_data$Age <- partition_age(10)
 
 age_range <- function(st_age, nd_age, by){
-  cut(credit_data$Age, breaks = seq(st_age, nd_age, by))
+  credit_data$Age <- cut(credit_data$Age, breaks = seq(st_age, nd_age, by))
 }
-#credit_data$Age <- age_range(25, 35, 2)
 
 # Zmiana decyzji 
 positive <- which(credit_data$Decision == 1)
@@ -42,9 +41,8 @@ credit_data$Decision[negative] = "Not granted"
 
 # Zmiana kwoty na przedziały kwoty
 partition_credit_amount <-function(range_amount){
-  cut(credit_data$Credit_amount, breaks = seq(0,20000,range_amount))
+  credit_data$Credit_amount <- cut(credit_data$Credit_amount, breaks = seq(0,20000,range_amount))
 }
-credit_data$Credit_amount <- partition_credit_amount(2000) #przedziały w dziwnej postaci
 
 changing_factor_names <- function(col, new_names){
   levels(credit_data$col) <- new_names
