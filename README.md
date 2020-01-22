@@ -1,6 +1,6 @@
 # StudentsProject2019
 
-Projects created by students at the [IM@UWr](http://math.uni.wroc.pl) as a part of the **Programming and data analysis in R** course ([USOS](https://usosweb.uni.wroc.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&prz_kod=28-MT-S-LPrAnDaR), [GitHub](https://github.com/StatsIMUWr/Wprowadzenie_do_R_2019)) under [Mateusz Staniak's](https://mstaniak.github.io) supervision.
+Projects created by students at the [IM@UWr](http://math.uni.wroc.pl) as a part of the **Programming and data analysis in R** course ([USOS](https://usosweb.uni.wroc.pl/kontroler.php?_action=katalog2/przedmioty/pokazPrzedmiot&prz_kod=28-MT-S-LPrAnDaR), [GitHub](https://github.com/StatsIMUWr/Wprowadzenie_do_R_2019)).
 
 
 Projects:
