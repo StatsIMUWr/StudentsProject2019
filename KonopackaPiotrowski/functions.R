@@ -17,6 +17,7 @@ libs <-
     "ggplot2"
   )
 load_libraries(libs)
+conflict_prefer("filter", "dplyr")
 
 #LOAD AND CLEAR DATA-----------------------------------------------------------------------------------------
 #this function loads data without duplicated
@@ -69,25 +70,22 @@ data_select <- function(sex, country, sport){
   return(ds)
 }
 
-#TEST
-sport <- list("Boxing", "Judo", "Basketball")
-country <- list("France", "Poland")
-sex <- list("M")
-View(data_select(sex, country, sport))
+data_age_range <- function(data, low, high){
+  data %>% 
+    filter(Age >= low & Age <= high) -> ds
+  return(ds)
+}
 
 #PLOTS-----------------------------------------------------------------------------------------------
-#scatter plot: weight vs height for athletes in age between ... ...
-plot1 <- function(low, high) {
-  range <- low <= data_clear$Age & data_clear$Age <= high
-  age_str <-
-    paste("in age between ",
-          as.character(low),
-          "and",
-          as.character(high))
-  
-  ggplot(data_clear[range,], aes(x = Weight, y = Height, color = Sex)) +
+#scatter plot: Weight vs height for athletes aged between ...
+plot1 <- function(data, low, high) {
+  #subtitle text
+  age_str <- paste("aged between", as.character(low), "and", as.character(high))
+  #plot
+  ggplot(data = data_age_range(data, low, high), 
+         aes(x = Weight, y = Height, color = Sex)) +
     geom_point(size = 0.2, alpha = 0.9) +
-    scale_color_manual("Sex", values = c(F = "sienna3", M = "navy")) +
+    scale_color_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
     labs(
       title = "Weight and height of athletes",
       subtitle = age_str,
@@ -96,26 +94,46 @@ plot1 <- function(low, high) {
     )
 }
 
-#histogram: how many observations of given variable colored by...
+#histogram: How many observations of given variable colored by...
 #TODO change position, grid, color
 plot2 <- function(variable, color_by) {
   ggplot(data_clear, aes_string(x = variable, fill = color_by)) +
     geom_bar() +
-    scale_fill_manual("Sex", values = c(F = "sienna3", M = "navy")) +
-    labs(
-      title = "Number of observations in our database",
-      subtitle = paste("Chosen variable: ", variable),
-      x = "Value",
-      y = "Number of observations"
-    )
+    scale_fill_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
+    labs(title = "Number of observations in our database", 
+         subtitle = paste("Chosen variable: ", variable),
+         x = "Value", y = "Number of observations")
 }
 
 #line plot: Mean weight and height over decades in different countries, sports,
 plot3 <- function(variable, low, high, color_by, #next arguments are lists
            filter_sport, filter_country, filter_sex) {
-
+    #filter dataframe
     ds <- data_select(filter_sex, filter_sport, filter_country)
-    
+    #plot
     ggplot(ds, aes(x = "Decade", y = variable)) +
       geom_line(group = color_by)
   }
+
+#facets: Weight vs height aged between ... for different sports
+plot4 <- function(data, low, high) {
+  #subtitle text
+  age_str <- paste("Weight vs height of athletes aged between", as.character(low), "and", as.character(high))
+  #background data
+  data[ , names(data) != "Sport"] %>% data_age_range(low, high) -> bg
+  #plot
+  ggplot(data = data, aes(x = Weight, y = Height), size = 0.2, alpha = 0.2) +
+    geom_point(data = bg, color = "grey") +
+    geom_point(size = 0.1, aes(color = Sex)) +
+    scale_color_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
+    facet_wrap(~ Sport) +
+    labs(title = age_str) +
+    theme(axis.title.x = element_blank(), axis.text.y = element_blank())
+}
+
+
+
+
+
+
+
