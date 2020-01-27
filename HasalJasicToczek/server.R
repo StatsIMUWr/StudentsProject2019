@@ -1,11 +1,13 @@
 server <- function(input, output) {
-   
   output$one_variable <- renderPlot({
     credit_data_age <- age_range(input$age_range[1],input$age_range[2], input$step)
-    plot_one_attribute(credit_data_age, input$parametr)
+    credit_data_age <- partition_credit_amount(credit_data_age, input$amount)
+    plot_one_attribute(credit_data_age, input$parametr, input$fill, input$color)
+    
   })
   output$two_variables <- renderPlot({
     credit_data_age <- age_range(input$age_range[1],input$age_range[2], input$step)
-    plot_two_attributes(credit_data_age, input$parametr, input$parametr2)
+    credit_data_age <- partition_credit_amount(credit_data_age, input$amount)
+    plot_two_attributes(credit_data_age, input$parametr, input$parametr2, input$fill, input$color)
   })
 }
