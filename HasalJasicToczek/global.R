@@ -1,4 +1,5 @@
 library(shiny)
+library(shinydashboard)
 library(ggplot2)
 library(ggthemes)
 library(plyr)
@@ -60,7 +61,6 @@ vector_factor_col <-c("Account_status",
                       "Telephone",
                       "Foreign_worker")
 
-# credit_data <- change_factor_names('Account_status', c('<0DM', '[0,200]DM', '> 200DM', 'none'))
 new_names <- list(c('< 0 DM', '[0,200] DM', '> 200 DM', 'none'),
                   c('none/all paid back duly',
                     'all paid back duly(in this bank)',
@@ -132,7 +132,7 @@ age_range <- function(st_age, nd_age, by) {
 
 # Zmiana kwoty na przedzialy kwoty
 partition_credit_amount <-function(credit_data_age, range_amount) {
-  credit_data_age$Credit_amount <- cut(credit_data_age$Credit_amount, breaks = seq(0, 20000, range_amount))
+  credit_data_age$Credit_amount <- cut(credit_data_age$Credit_amount, breaks = seq(0, 20000, range_amount), dig.lab = 10)
   credit_data_age
 }
 
@@ -144,7 +144,7 @@ plot_one_attribute <- function(credit_data_age,col,fill_stack_dodge, dark2_set1_
     scale_fill_brewer(palette = dark2_set1_pastel2) +
     theme_stata() +
     labs(title = paste("Decision about credit depending on", str_replace_all(col, '_', ' '))) +
-    theme(text=element_text(size=15), axis.text.x = element_text(angle = 15, vjust = 0.6)) +
+    theme(text=element_text(size=15, family = cfont), axis.text.x = element_text(angle = 30, vjust = 0.6))+
     xlab(str_replace_all(col, '_', ' '))
 }
 
@@ -156,8 +156,8 @@ plot_two_attributes <- function(credit_data_age, col1, col2, fill_stack_dodge, d
     facet_wrap(vars(credit_data_age$"Decision")) +
     labs(title = paste("Decision about credit depending on", str_replace_all(col1, '_', ' '),
                        'and', str_replace_all(col2, '_', ' '))) +
-    theme(text=element_text(size=15), axis.text.x = element_text(angle = 15, vjust = 0.6))  +
-    xlab(str_replace_all(col1, '_', ' '))
+    theme(text=element_text(size=15, family = cfont),axis.text.x = element_text(angle = 30, vjust = 0.6))  +
+    xlab(str_replace_all(col1, '_', ' ') )
 }
 
 vector_position <- c('fill', 'stack', 'dodge')
