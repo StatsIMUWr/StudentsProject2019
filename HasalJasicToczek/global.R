@@ -1,6 +1,7 @@
 library(shiny)
 library(ggplot2)
 library(ggthemes)
+library(plyr)
 
 credit_data <- read.table("german.data")
 colnames(credit_data) <- c("Account_status",
@@ -68,12 +69,18 @@ new_names <- list(c('<0DM', '[0,200]DM', '> 200DM', 'none'),
                  'retraining',
                  'business',
                  'other'))
+
+for(k in 1:length(new_names)) {
+  credit_data[,vector_factor_col[k]] <-  mapvalues(credit_data[,vector_factor_col[k]],
+                                                   from = levels(credit_data[,vector_factor_col[k]]),
+                                                   to = new_names[[k]])
+}
 # change_factor_names <- function(i) {
 #   levels(credit_data[[vector_factor_col[i]]]) <- new_names[i]
 #   credit_data
-# }
-# 
-# sapply(c(1:3), change_factor_names)
+# } #forcats
+
+#sapply(c(1:3), change_factor_names)
 
 # Zmiana wieku na przedzialy wieku.
 age_range <- function(st_age, nd_age, by) {
@@ -110,8 +117,8 @@ plot_two_attributes <- function(credit_data_age, col1, col2, fill_stack_dodge, d
     theme(text=element_text(size=15)) 
 }
 
-vector_fill <- c('stack', 'dodge')
-vector_color <- c('Dark2', 'Pastel2')
+vector_position <- c('fill', 'stack', 'dodge')
+vector_color <- c('Set1', 'Dark2', 'Pastel2')
 
 plot_one_attribute(credit_data, 'Credit_history', 'dodge', 'Dark2')
 plot_two_attributes(credit_data,'Job', 'Account_status', 'stack', 'Pastel2')
