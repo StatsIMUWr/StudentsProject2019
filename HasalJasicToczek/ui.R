@@ -1,5 +1,5 @@
 ui <- fluidPage(
-  column(4, titlePanel("Credit risk"), 
+  column(3, titlePanel("Credit risk"), 
          selectInput(inputId = "parametr", 
                      label = "Choose parametr to analize",
                      choices = colnames(credit_data)),
@@ -11,13 +11,21 @@ ui <- fluidPage(
                      min = 18,
                      max = 80,
                      value = c(18,80),
-                     step = 1)),
-        numericInput(inputId = "step",
-                     label = "Choose step in age range:"),
-        numericInput(inputId = "amount",
-                     label = "Choose step in amount range:"),
+                     step = 1),
+         selectInput(inputId = "color", 
+                     label = "Choose color",
+                     choices = vector_color),
+         selectInput(inputId = "fill", 
+                     label = "Choose fill",
+                     choices = vector_fill),
+          numericInput(inputId = "step",
+                     label = "Choose step in age range:",
+                     value = 1),
+          numericInput(inputId = "amount",
+                     label = "Choose step in amount range:",
+                    value = 1)),
   
-  column(8,tabsetPanel(
+  column(9,tabsetPanel(
     tabPanel("1 variable", plotOutput("one_variable")),
     tabPanel("2 variables", plotOutput("two_variables"))
   )))
