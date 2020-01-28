@@ -45,38 +45,76 @@ credit_data$Decision[negative] = "Not granted"
 
 vector_factor_col <-c("Account_status",
                       "Credit_history",
-                      "Puprose")
+                      "Puprose",
+                      "Savings_account_and_bonds",
+                      "Present_employment_since",
+                      "Status_and_Sex",
+                      "Debtors_and_guarantors",
+                      #"Present_residence_since",
+                      "Property",
+                      "Other_installment_plans",
+                      "Housing",
+                      #"Existing_credit",
+                      "Job",
+                      #"Maintenance",
+                      "Telephone",
+                      "Foreign_worker")
 
-# "Savings_account_and_bonds",
-# "Present_employment_since",
-# "Status_and_Sex",
-# "Debtors_and_guarantors",
-# "Present_residence_since",
-# "Property",
-# "Other_installment_plans",
-# "Housing",
-# "Existing_credit",
-# "Job",
-# "Maintenance",
-# "Telephone",
-# "Foreign_worker")
 # credit_data <- change_factor_names('Account_status', c('<0DM', '[0,200]DM', '> 200DM', 'none'))
-new_names <- list(c('<0DM', '[0,200]DM', '> 200DM', 'none'),
+new_names <- list(c('< 0 DM', '[0,200] DM', '> 200 DM', 'none'),
                   c('none/all paid back duly',
-                    'all paid back duly(in this bank',
+                    'all paid back duly(in this bank)',
                     'all paid back duly(until now)',
                     'delay in past',
                     'critical/other credits existing'),
                   c('car(new)',
                     'car(used)',
-                    'furniture/equpment',
+                    'furniture/equipment',
                     'radio/tv',
                     'domestic appliances',
                     'repairs',
                     'education',
                     'retraining',
                     'business',
-                    'other'))
+                    'other'),
+                  c('< 100 DM',
+                    '[100,500) DM',
+                    '[500,1000) DM',
+                    '>= 1000 DM',
+                    'unknown/no saving account'),
+                  c('uneployment',
+                    '< 1 year',
+                    '[1,4) years',
+                    '[4,7) years',
+                    '>= 7 years'),
+                  c('male: divorced/separated',
+                    'female: divorced/separated/married',
+                    'male: single',
+                    'male: married/widowed'),
+                  c('none',
+                    'co-applicant',
+                    'guantor'),
+                  #
+                  c('real estate',
+                    'building society savings agreement/life insurance',
+                    'car or other',
+                    'unknown/no property'),
+                  c('bank',
+                    'stores',
+                    'none'),
+                  c('rent',
+                    'own',
+                    'for free'),
+                  #
+                  c('unemployed/ unskilled - non-resident',
+                    'officialunskilled - resident',
+                    'skilled employee / official',
+                    'management/ self-employed/ \n
+                    highly qualified employee/ officer'),
+                  #
+                  c('none',
+                    'yes, registered under the customers name'),
+                  c('yes', 'no'))
 
 for(k in 1:length(new_names)) {
   credit_data[,vector_factor_col[k]] <-  mapvalues(credit_data[,vector_factor_col[k]],
@@ -106,7 +144,7 @@ plot_one_attribute <- function(credit_data_age,col,fill_stack_dodge, dark2_set1_
     scale_fill_brewer(palette = dark2_set1_pastel2) +
     theme_stata() +
     labs(title = paste("Decision about credit depending on", str_replace_all(col, '_', ' '))) +
-    theme(text=element_text(size=15, family = cfont))+
+    theme(text=element_text(size=15), axis.text.x = element_text(angle = 15, vjust = 0.6)) +
     xlab(str_replace_all(col, '_', ' '))
 }
 
@@ -118,8 +156,8 @@ plot_two_attributes <- function(credit_data_age, col1, col2, fill_stack_dodge, d
     facet_wrap(vars(credit_data_age$"Decision")) +
     labs(title = paste("Decision about credit depending on", str_replace_all(col1, '_', ' '),
                        'and', str_replace_all(col2, '_', ' '))) +
-    theme(text=element_text(size=15, family = cfont))  +
-    xlab(str_replace_all(col1, '_', ' ') )
+    theme(text=element_text(size=15), axis.text.x = element_text(angle = 15, vjust = 0.6))  +
+    xlab(str_replace_all(col1, '_', ' '))
 }
 
 vector_position <- c('fill', 'stack', 'dodge')
@@ -130,4 +168,3 @@ vector_fonts <- c('serif', 'Bahnschrift', 'Comic Sans MS', 'Javanese Text')
 
 plot_one_attribute(credit_data, 'Credit_history', 'dodge', 'Dark2', 'serif')
 plot_two_attributes(credit_data, 'Account_status', 'Job', 'stack', 'Pastel2', 'serif')
-
