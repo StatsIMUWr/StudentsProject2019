@@ -1,0 +1,7 @@
+-fix plot 3 (calculate means for weight and height and mean BMI -> proper line plot)
+-generate choices lists from colnames: plot 3 and add selectInput for y-axis
+-change size of all displayed plots
+-fix color scale for NA Medals: plot 2
+-remove NA age group: plot 2
+-add sth like menu to Start panel
+-add descriptions to all plots

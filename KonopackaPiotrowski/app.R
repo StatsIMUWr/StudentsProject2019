@@ -2,6 +2,11 @@
 library("shiny")
 source("functions.R")
 
+#ui-----------------------------------------------------------------------------------------------
+#define choices:
+tab2_choices <- c("Sex", "Decade", "Age_Group", "City", "Sport", "Medal", "Season")
+allowed_color_by <- c("Medal", "Sex")
+
 ui <- navbarPage("OlympicsVis",
 #mainPanel-------------------------------------------------------------------------------------------                 
                  mainPanel(title = "Start"),
@@ -20,18 +25,18 @@ ui <- navbarPage("OlympicsVis",
                          
                          selectInput(inputId = "tab2_select1",
                                      label ="Variable",
-                                     choices = colnames(data_clear)),
+                                     choices = tab2_choices),
                          
                          selectInput(inputId = "tab2_select2",
                                      label ="Color by",
-                                     choices = list("Sex")),
+                                     choices = allowed_color_by),
                          
                          plotOutput("plot2")),
 #tabPanel3----------------------------------------------------------------------------------------------
                 tabPanel(title = "Plot 3",
                          checkboxGroupInput(inputId = "tab3_sport", 
                                             h3("Sport:"), 
-                                            choices = list("Choice 1" = 1), #TODO generate list of choices
+                                            choices = list("Choice 1" = 1), 
                                             selected = 1),
                          
                          checkboxGroupInput(inputId = "tab3_sex", 
@@ -77,8 +82,8 @@ ui <- navbarPage("OlympicsVis",
 #server-------------------------------------------------------------------------------------------------
 server <- function(input, output){
   output$plot1 <- renderPlot({plot1(data_clear, input$tab1_range[1], input$tab1_range[2])})
-  output$plot2 <- renderPlot({plot2(input$tab2_select1, input$tab2_select2)})
-  output$plot3 <- renderPlot({plot3(input$tab3_select, 
+  output$plot2 <- renderPlot({plot2(data_clear, input$tab2_select1, input$tab2_select2)})
+  output$plot3 <- renderPlot({plot3(data_clear, input$tab3_select, 
                                     input$tab3_range[1], input$tab4_range[2],
                                     input$tab3_color, 
                                     input$tab3_sport,

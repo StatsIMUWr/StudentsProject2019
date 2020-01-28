@@ -53,15 +53,18 @@ medals_only <- !is_NA_dtf$Medal
 #create dataframe without NA age, height and weight (NA medals allowed)
 data_clear <- data_NA[clear_weight & clear_height & clear_age,]
 
-#add decade column
+#add decade column---------------
 Decade <- factor((data_clear$Year %/% 10) * 10)
 data_clear <- cbind(data_clear, Decade)
 
-#add age groups
+#add age groups----------------
 #TODO fix NA Age_Group
 intervals <- c(11, 13, 15, 17, 19, 21, 23, 27, 29, 31, 36, 41, 46, 50, 60, 71)
 Age_Group <- factor(cut(data_clear$Age, intervals))
 data_clear <- cbind(data_clear, Age_Group)
+
+#reorder levels
+data_clear$Medal <- ordered(data_clear$Medal, levels = c("Gold", "Silver", "Bronze", "NA"))
 
 #FUNCTIONS---------------------------------------------------------------------------------
 data_select <- function(sex, country, sport){
@@ -76,6 +79,17 @@ data_age_range <- function(data, low, high){
   return(ds)
 }
 
+color_scale <- function(var){
+  #color scales:
+  scale_Sex_1 <- c(F = "darkorchid1", M = "deepskyblue")
+  scale_Medal_1 <- c("Gold" = "gold" , "Bronze" = "brown" , "Silver" = "grey" , "NA" = "darkolivergreen2")
+  
+  if(var == "Sex"){values = scale_Sex_1}
+  if(var == "Medal"){values = scale_Medal_1}
+  return (values)
+}
+
+
 #PLOTS-----------------------------------------------------------------------------------------------
 #scatter plot: Weight vs height for athletes aged between ...
 plot1 <- function(data, low, high) {
@@ -84,8 +98,10 @@ plot1 <- function(data, low, high) {
   #plot
   ggplot(data = data_age_range(data, low, high), 
          aes(x = Weight, y = Height, color = Sex)) +
-    geom_point(size = 0.2, alpha = 0.9) +
-    scale_color_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
+    geom_point(size = 0.6, alpha = 0.2) +
+    theme_bw() +
+    scale_color_manual(values = color_scale("Sex")) +
+    geom_smooth() +
     labs(
       title = "Weight and height of athletes",
       subtitle = age_str,
@@ -95,25 +111,32 @@ plot1 <- function(data, low, high) {
 }
 
 #histogram: How many observations of given variable colored by...
-#TODO change position, grid, color
-plot2 <- function(variable, color_by) {
-  ggplot(data_clear, aes_string(x = variable, fill = color_by)) +
+plot2 <- function(data, variable, color_by) {
+  #define which labels must be rotated
+  labels_90 <- c("Sport", "City", "Decade")
+  if (variable %in% labels_90){text = 90} else {text = 0}
+  #plot
+  ggplot(data, aes_string(x = variable, fill = color_by)) +
     geom_bar() +
-    scale_fill_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
+    theme_bw() +
+    theme(axis.text.x = element_text(angle = text)) +
+    scale_fill_manual(values = color_scale(color_by)) +
     labs(title = "Number of observations in our database", 
          subtitle = paste("Chosen variable: ", variable),
          x = "Value", y = "Number of observations")
 }
 
 #line plot: Mean weight and height over decades in different countries, sports,
-plot3 <- function(variable, low, high, color_by, #next arguments are lists
-           filter_sport, filter_country, filter_sex) {
-    #filter dataframe
-    ds <- data_select(filter_sex, filter_sport, filter_country)
+plot3 <- function(data, variable, low, high, color_by) {
+    if(color_by == "Sex"){scale = c("Sex", values = scale_Sex1_1)}
+    if (variable == "Decade"){text = 90} else {text = 0}
     #plot
-    ggplot(ds, aes(x = "Decade", y = variable)) +
-      geom_line(group = color_by)
-  }
+    ggplot(data, aes_string(x = "Decade", y = variable, color = color_by)) +
+      scale_color_manual(values = color_scale(color_by)) +
+      geom_line(aes_string(group = "Sex")) +
+      theme_bw() +
+      theme(axis.text.x = element_text(angle = text))
+      }
 
 #facets: Weight vs height aged between ... for different sports
 plot4 <- function(data, low, high) {
@@ -125,9 +148,10 @@ plot4 <- function(data, low, high) {
   ggplot(data = data, aes(x = Weight, y = Height), size = 0.2, alpha = 0.2) +
     geom_point(data = bg, color = "grey") +
     geom_point(size = 0.1, aes(color = Sex)) +
-    scale_color_manual("Sex", values = c(F = "darkorchid1", M = "navy")) +
+    scale_color_manual(values = color_scale("Sex")) +
     facet_wrap(~ Sport) +
     labs(title = age_str) +
+    theme_bw() +
     theme(axis.title.x = element_blank(), axis.text.y = element_blank())
 }
 
