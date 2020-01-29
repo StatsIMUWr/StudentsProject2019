@@ -1,3 +1,4 @@
+
 ui <- fluidPage(
   titlePanel("Credit risk"),
   sidebarLayout(
@@ -31,38 +32,40 @@ ui <- fluidPage(
                            downloadButton(outputId = 'downloadPlot', label = 'Download Plot')
                   ),
                   tabPanel("two variable",
-                           selectInput(inputId = "parametr", 
+                           selectInput(inputId = "parametr1", 
                                        label = "Choose parametr to analize",
                                        choices = parameters),
                            selectInput(inputId = "parametr2", 
                                        label = "Choose second parametr to analize",
                                        choices = parameters),
-                           sliderInput(inputId = "age_range",
+                           sliderInput(inputId = "age_range1",
                                        label = "Choose age:",
                                        min = 18,
                                        max = 80,
                                        value = c(18,80),
                                        step = 1),
-                           selectInput(inputId = "color", 
+                           selectInput(inputId = "color1", 
                                        label = "Choose color",
                                        choices = vector_color),
-                           selectInput(inputId = "position", 
+                           selectInput(inputId = "position1", 
                                        label = "Choose position",
                                        choices = vector_position),
-                           selectInput(inputId = 'font',
+                           selectInput(inputId = 'font1',
                                        label = 'Choose font',
                                        choices = vector_fonts),
-                           numericInput(inputId = "step",
+                           numericInput(inputId = "step1",
                                         label = "Choose step in age range:",
                                         value = 5),
-                           numericInput(inputId = "amount",
+                           numericInput(inputId = "amount1",
                                         label = "Choose step in amount range:",
                                         value = 2000)
                   ))
     ),
     mainPanel(
-      plotOutput("plot")
+      plotOutput("plot",height = "660px")
       
     )
   )
 )
+
+
