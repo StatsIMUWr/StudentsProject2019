@@ -80,27 +80,34 @@ ui <- fluidPage(
                    column(width = 2,
                           selectInput(inputId = "purpose",
                                       label = "Choose purpose",
-                                      choices = c("All", levels(credit_data_factor$Purpose)))),
+                                      choices = c("All", levels(credit_data_factor$Purpose)))
+                   ),
                    column(width = 2,
                           selectInput(inputId = "credit",
                                       label = "Choose credit amount",
-                                      choices = c("All", levels(credit_data_factor$Credit_amount)))),
+                                      choices = c("All", levels(credit_data_factor$Credit_amount)))
+                   ),
                    column(width = 2,
                           selectInput(inputId = "saving",
                                       label = "Choose saving account",
-                                      choices = c("All", levels(credit_data_factor$Savings_account_and_bonds)))),
+                                      choices = c("All", levels(credit_data_factor$Savings_account_and_bonds)))
+                   ),
                    column(width = 2,
                           selectInput(inputId = "age",
                                       label = "Choose age:",
-                                      choices = c("All", levels(credit_data_factor$Age)))),
+                                      choices = c("All", levels(credit_data_factor$Age)))
+                   ),
                    column(width = 2,
                           selectInput(inputId = "job",
                                       label = "Choose job:",
-                                      choices = c("All", levels(credit_data_factor$Job)))),
+                                      choices = c("All", levels(credit_data_factor$Job)))
+                   ),
                    column(width = 2,
                           selectInput(inputId = "decision",
                                       label = "Choose decision:",
-                                      choices = c("All", levels(credit_data_factor$Decision))))),
+                                      choices = c("All", levels(credit_data_factor$Decision)))
+                   )
+                 ),
                  tableOutput("table")
         )
       )
