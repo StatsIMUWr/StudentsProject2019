@@ -1,7 +1,7 @@
 # Credit Risk Vis
 
 An R tool and Shiny application to visualize Credit Risk data. 
-The app can be accessed ... TBA.
+The app can be accessed at
 
 http://toczek.shinyapps.io/credit_data_analysis
 
